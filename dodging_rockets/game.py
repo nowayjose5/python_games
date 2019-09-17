@@ -177,8 +177,16 @@ move_up_sound = pygame.mixer.Sound("Rising_putter.ogg")
 move_down_sound = pygame.mixer.Sound("Falling_putter.ogg")
 collision_sound = pygame.mixer.Sound("Collision.ogg")
 
+# Game over image
+game_over_img = pygame.image.load("gameover.png")
+
 # Add button
 start_button = Button((255, 255, 255), 350, 370, 80, 40, 'Start')
+
+
+def text_object(text, font):
+    text_surface = font.render(text, True, (0, 0, 0))
+    return text_surface, text_surface.get_rect()
 
 
 def game_menu():
@@ -186,7 +194,11 @@ def game_menu():
 
     while running:
         screen.fill((255, 255, 255))
+        title_text = pygame.font.SysFont('arial', 50)
+        text_surf, text_rect = text_object("Welcome to Dodging Rockets!", title_text)
+        text_rect.center = ((SCREEN_WIDTH/2), (SCREEN_HEIGHT/2))
         start_button.draw(screen, (0, 0, 0))
+        screen.blit(text_surf, text_rect)
         pygame.display.update()
         clock.tick(75)
 
@@ -275,7 +287,26 @@ def game_loop():
         clock.tick(75)
 
 
+def game_over():
+    running = True
+    while running:
+        for event in pygame.event.get():
+            if event.type == KEYDOWN and event.key == K_ESCAPE:
+                pygame.quit()
+                exit()
+                running = False
+            elif event.type == QUIT:
+                pygame.quit()
+                exit()
+                running = False
+
+        screen.blit(game_over_img, (315, 350))
+        pygame.display.update()
+        clock.tick(75)
+
+
 game_menu()
 game_loop()
 pygame.mixer.music.stop()
 pygame.mixer.quit()
+game_over()
