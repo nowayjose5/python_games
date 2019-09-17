@@ -4,10 +4,10 @@ import pygame
 # Import random for random numbers
 import random
 
+# Import exit
 from sys import exit
 
 # Import pygame.locals for easier access to key coordinates
-# Updated to conform to flake8 and black standards
 from pygame.locals import (
     MOUSEBUTTONDOWN,
     MOUSEMOTION,
@@ -33,8 +33,6 @@ class Player(pygame.sprite.Sprite):
         super(Player, self).__init__()
         self.surf = pygame.image.load("jet.png").convert()
         self.surf.set_colorkey((255, 255, 255), RLEACCEL)
-        # self.surf = pygame.Surface((75, 25))
-        # self.surf.fill((255, 255, 255))
         self.rect = self.surf.get_rect()
 
     # Move the sprite based on user keypresses
@@ -68,8 +66,6 @@ class Enemy(pygame.sprite.Sprite):
         super(Enemy, self).__init__()
         self.surf = pygame.image.load("missile.png").convert()
         self.surf.set_colorkey((255, 255, 255), RLEACCEL)
-        # self.surf = pygame.Surface((20, 10))
-        # self.surf.fill((255, 255, 255))
         self.rect = self.surf.get_rect(
             center=(
                 random.randint(SCREEN_WIDTH + 20, SCREEN_WIDTH + 100),
@@ -159,7 +155,7 @@ pygame.time.set_timer(ADDENEMY, 250)
 ADDCLOUD = pygame.USEREVENT + 2
 pygame.time.set_timer(ADDCLOUD, 1000)
 
-# Instantiate player. Right now, this is just a rectangle.
+# Instantiate player.
 player = Player()
 
 # Create groups to hold enemy sprites and all sprites
